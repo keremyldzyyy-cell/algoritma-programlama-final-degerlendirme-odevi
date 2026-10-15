@@ -1,71 +1,48 @@
 #include <stdio.h>
 #include <math.h>
 
-int main() {
-    float fiyat, odenen_tutar;
-    while (1) {
-        printf("Lutfen ucreti giriniz...\n");
-        if (scanf("%f", &fiyat) == 0) {
-            printf("Lutfen sayi giriniz\n");
-            fflush(stdin);
-            continue;
-        }
-        printf("Odenen miktari giriniz...\n");
-        if (scanf("%f", &odenen_tutar) == 0) {
-            printf("Lutfen sayi giriniz\n");
-            fflush(stdin);
-            continue;
-        }
-        if (odenen_tutar > fiyat) {
-            break;
-        }
-        printf("Para ustu eksik. Degerleri tekrar giriniz.\n");
-    }
-    printf("\n========================================\n");
-    printf("           ISLEM OZETI                  \n");
-    printf("========================================\n");
-    printf(" Ucret        : %.2f TL\n", fiyat);
-    printf(" Odenen Tutar : %.2f TL\n", odenen_tutar);
-    printf(" Para Ustu    : %.2f TL\n", odenen_tutar - fiyat);
-    printf("========================================\n");
-    int banknot_degerleri[7] = {20000, 10000, 5000, 2000, 1000, 500, 100};
-    char banknot_isimleri[7][10] = {"200 TL", "100 TL", "50 TL", "20 TL", "10 TL", "5 TL", "1 TL"};
-    int kurus_degerleri[5] = {50, 25, 10, 5, 1};
-    char kurus_isimleri[5][20] = {"50 kurus", "25 kurus", "10 kurus", "5 kurus", "1 kurus"};
-    int banknot_adetleri[7] = {0, 0, 0, 0, 0, 0, 0};
-    int kurus_adetleri[5] = {0, 0, 0, 0, 0};
-    int kalan_kurus = (int)roundf((odenen_tutar - fiyat) * 100);
-    int toplam_banknot_adedi = 0;
-    for (int i = 0; i < 7; i++) {
-        int adet = kalan_kurus / banknot_degerleri[i];
-        toplam_banknot_adedi += adet;
-        kalan_kurus -= adet * banknot_degerleri[i];
-        banknot_adetleri[i] = adet;
-    }
-    int toplam_kurus_adedi = 0;
-    for (int i = 0; i < 5; i++) {
-        int adet = kalan_kurus / kurus_degerleri[i];
-        toplam_kurus_adedi += adet;
-        kalan_kurus -= adet * kurus_degerleri[i];
-        kurus_adetleri[i] = adet;
-    }
-    printf("\n            PARA USTU DETAYI            \n");
-    printf("----------------------------------------\n");
-    printf("[Banknotlar]\n");
-    for (int i = 0; i < 7; i++) {
-        if (banknot_adetleri[i] > 0) {
-            printf("  > %-8s : %d adet\n", banknot_isimleri[i], banknot_adetleri[i]);
-        }
-    }
-    printf("\n[Kuruslar]\n");
-    for (int i = 0; i < 5; i++) {
-        if (kurus_adetleri[i] > 0) {
-            printf("  > %-10s : %d adet\n", kurus_isimleri[i], kurus_adetleri[i]);
-        }
-    }
-    printf("----------------------------------------\n");
-    printf(" Toplam Banknot Adedi : %d\n", toplam_banknot_adedi);
-    printf(" Toplam Kurus Adedi   : %d\n", toplam_kurus_adedi);
-    printf("========================================\n");
+int main(void)
+{
+    float urun_tutari, odenen_para;
+
+    printf("Urun tutari (TL): ");
+    scanf("%f", &urun_tutari);
+
+    printf("Musterinin odedigi para (TL): ");
+    scanf("%f", &odenen_para);
+
+    int para_ustu_kurus = (int)round((odenen_para - urun_tutari) * 100.0);
+
+    printf("\nMusteriye verilecek toplam para ustu: %d kurus\n", para_ustu_kurus);
+
+    int kalan = para_ustu_kurus;
+
+    int b200 = kalan / 20000; kalan = kalan % 20000;  
+    int b100 = kalan / 10000; kalan = kalan % 10000;  
+    int b50  = kalan / 5000;  kalan = kalan % 5000;   
+    int b20  = kalan / 2000;  kalan = kalan % 2000;   
+    int b10  = kalan / 1000;  kalan = kalan % 1000;   
+    int b5   = kalan / 500;   kalan = kalan % 500;    
+    int m1tl = kalan / 100;   kalan = kalan % 100;    
+    int k50  = kalan / 50;    kalan = kalan % 50;     
+    int k25  = kalan / 25;    kalan = kalan % 25;     
+    int k10  = kalan / 10;    kalan = kalan % 10;     
+    int k5   = kalan / 5;     kalan = kalan % 5;      
+    int k1   = kalan / 1;     kalan = kalan % 1;      
+
+    printf("\n--- Verilecek banknot ve madeni paralar ---\n");
+    printf("200 TL : %d adet\n", b200);
+    printf("100 TL : %d adet\n", b100);
+    printf("50 TL  : %d adet\n", b50);
+    printf("20 TL  : %d adet\n", b20);
+    printf("10 TL  : %d adet\n", b10);
+    printf("5 TL   : %d adet\n", b5);
+    printf("1 TL   : %d adet\n", m1tl);
+    printf("50 kr  : %d adet\n", k50);
+    printf("25 kr  : %d adet\n", k25);
+    printf("10 kr  : %d adet\n", k10);
+    printf("5 kr   : %d adet\n", k5);
+    printf("1 kr   : %d adet\n", k1);
+    
     return 0;
 }
